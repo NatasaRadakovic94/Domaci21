@@ -1,18 +1,20 @@
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
+//import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
 public class Zadatak1 {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
         System.setProperty("webdriver.chrome.driver", "C:\\bootcamp\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         driver.get("https://automationexercise.com");
 
@@ -55,11 +57,11 @@ public class Zadatak1 {
         Select countrybutton = new Select(country);
         countrybutton.selectByVisibleText("Canada");
 
-        Thread.sleep(2000);
-
         WebElement passwordField = driver.findElement(By.id("password"));
         String password1 = "sifra";
         passwordField.sendKeys(password1);
+
+        webDriverWait.until(ExpectedConditions.visibilityOf(passwordField));
 
         WebElement firstNameField = driver.findElement(By.id("first_name"));
         String firstName = "Ime";
